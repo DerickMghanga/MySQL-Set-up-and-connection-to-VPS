@@ -4,9 +4,9 @@ MySQL Set-up and connection to VPS
 Install MySQL 8.0 Server
 First, update the repository by running command:
 
-'''
+```
 sudo apt-get update
-'''
+```
 
 
 Then install the mysql server
