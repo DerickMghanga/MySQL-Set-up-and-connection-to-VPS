@@ -134,7 +134,7 @@ FLUSH PRIVILEGES;
 <h1>Set up Firewall to Allow Remote MySQL Connection</h1>
 
 
-**Allow connection in VPS provider console settings if necessary.**
+**Allow connection in VPS provider console settings if necessary. ie AWS lightsail Network settings(IPv4 & IPv6)**
 
 
 ```
