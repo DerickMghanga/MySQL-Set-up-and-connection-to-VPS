@@ -130,10 +130,16 @@ FLUSH PRIVILEGES;
 **Once that is done, your new user account has the same access to the database as the root user.**
 
 <h1>Set up Firewall to Allow Remote MySQL Connection</h1>
+
+
 **Allow connection in VPS provider console settings if necessary.**
+
+
 ```
 sudo ufw allow mysql
 ```
+
+
 **AFTER DEVELOPMENT CLOSE THE CONNECTION IF THE APP & WEB SERVERS IS IN THW SAME LOCATION WITH THE MYSQL DATABASE**
 
 **For example, to withdraw all privileges for our non-root user we should use:**
