@@ -92,9 +92,9 @@ bind-address            = 127.0.0.1
 . . .
 ```
 
-**By default, this value is set to 127.0.0.1, meaning that the server will only look for local connections. You will need to change this directive to reference an external IP address. For the purposes of troubleshooting, you could set this directive to a wildcard IP address, either *, ::, or 0.0.0.0:**
+**By default, this value is set to 127.0.0.1, meaning that the server will only look for local connections. You will need to change this directive to reference an external IP address. For the purposes of troubleshooting, you could set this directive to a wildcard IP address, either** *, ::, or ```0.0.0.0```
 
-After trouble shooting or finishing development. change bind-address to ```127.0.0.1``` or set your remote ip address
+After trouble shooting or finishing development. change bind-address to ```127.0.0.1``` or set your remote_ip_address
 
 
 Then restart the MySQL service to put the changes you made to mysqld.cnf into effect:
@@ -128,3 +128,25 @@ FLUSH PRIVILEGES;
 ```
 
 **Once that is done, your new user account has the same access to the database as the root user.**
+
+<h1>Set up Firewall to Allow Remote MySQL Connection</h1>
+**Allow connection in VPS provider console settings if necessary.**
+```
+sudo ufw allow mysql
+```
+**AFTER DEVELOPMENT CLOSE THE CONNECTION IF THE APP & WEB SERVERS IS IN THW SAME LOCATION WITH THE MYSQL DATABASE**
+
+**For example, to withdraw all privileges for our non-root user we should use:**
+```
+REVOKE ALL PRIVILEGES ON * . * FROM 'user_name'@'localhost';
+```
+
+***Finally, you can entirely delete an existing user account by using the following command:**
+```
+DROP USER ‘user_name’@‘localhost’;
+```
+
+**In order to find what privileges have already been granted to a MySQL user, you can use the SHOW GRANTS command:**
+```
+SHOW GRANTS FOR 'user_name'@'localhost';
+```
