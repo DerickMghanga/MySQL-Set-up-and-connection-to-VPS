@@ -1,4 +1,4 @@
-MySQL Set-up and connection to VPS
+<h1>MySQL Set-up and connection to VPS.</h1>
 
 
 Install MySQL 8.0 Server
@@ -103,8 +103,10 @@ sudo systemctl restart mysql
 ```
 
 
-**Create a New User and grant all privileges to a database**
-Access command line and enter MySQL server:
+<h1>Create a New User and grant all privileges to a database.</h1>
+
+
+**Access command line and enter MySQL server:**
 ```
 mysql
 ```
