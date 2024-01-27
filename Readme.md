@@ -147,7 +147,7 @@ sudo ufw allow mysql
 REVOKE ALL PRIVILEGES ON * . * FROM 'user_name'@'localhost';
 ```
 
-***Finally, you can entirely delete an existing user account by using the following command:**
+**Finally, you can entirely delete an existing user account by using the following command:**
 ```
 DROP USER ‘user_name’@‘localhost’;
 ```
