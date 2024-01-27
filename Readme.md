@@ -47,9 +47,7 @@ Log into mysql server as root.
 mysql -u root –p
 ```
 
-
 Enter the password for root in the prompt.
-
 
 
 Create new database called ‘myfirstdb’.
@@ -72,3 +70,61 @@ Once you done with all commands, you can quit the mysql window by using this com
 ```
 mysql> quit;
 ```
+
+
+
+**One of the more common problems that users run into when trying to set up a remote MySQL database is that their MySQL instance is only configured to listen for local connections. This is MySQL’s default setting, but it won’t work for a remote database setup since MySQL must be able to listen for an external IP address where the server can be reached. To enable this, open up your mysqld.cnf file:**
+
+```
+sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+```
+
+Navigate to the line that begins with the bind-address directive. It will look like this: 
+
+```
+. . .
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+#
+# Instead of skip-networking the default is now to listen only on
+# localhost which is more compatible and is not less secure.
+bind-address            = 127.0.0.1
+. . .
+```
+
+**By default, this value is set to 127.0.0.1, meaning that the server will only look for local connections. You will need to change this directive to reference an external IP address. For the purposes of troubleshooting, you could set this directive to a wildcard IP address, either *, ::, or 0.0.0.0:**
+
+After trouble shooting or finishing development. change bind-address to ```127.0.0.1``` or set your remote ip address
+
+
+Then restart the MySQL service to put the changes you made to mysqld.cnf into effect:
+```
+sudo systemctl restart mysql
+```
+
+
+**Create a New User and grant all privileges to a database**
+Access command line and enter MySQL server:
+```
+mysql
+```
+
+Then, execute the following command:
+```
+CREATE USER 'new_user'@'localhost' IDENTIFIED BY 'password';
+```
+
+**new_user** is the name we’ve given to our new user account and the **IDENTIFIED BY ‘password’** section sets a passcode for this user. You can replace these values with your own, inside the quotation marks.
+
+
+In order to grant all privileges of the database for a newly created user, execute the following command:
+```
+GRANT ALL PRIVILEGES ON * . * TO 'new_user'@'localhost';
+```
+
+For changes to take effect immediately flush these privileges by typing in the command:
+```
+FLUSH PRIVILEGES;
+```
+
+**Once that is done, your new user account has the same access to the database as the root user.**
