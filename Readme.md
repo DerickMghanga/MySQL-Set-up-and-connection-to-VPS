@@ -102,9 +102,41 @@ Then restart the MySQL service to put the changes you made to mysqld.cnf into ef
 sudo systemctl restart mysql
 ```
 
+<h1> Root DB user set-up. </h1>
+
+**On some systems, like Ubuntu, MySQL is using the Unix auth_socket plugin by default.**
+
+Basically it means that: **db_users** using it, will be "authenticated" by the **system user credentials.** You can see if your root user is set up like this by doing the following: use ```sudo``` since its a new installation
+
+```
+sudo mysql -u root
+
+mysql> USE mysql;
+
+mysql> SELECT User, Host, plugin FROM mysql.user;
+```
+
+
+As you can see in the query, the **root** user is using the **auth_socket** plugin.
+
+<h2>To solve this:</h2>
+
+```
+sudo mysql -u root
+
+mysql> USE mysql;
+
+mysql> UPDATE user SET plugin='mysql_native_password' WHERE User='root';
+
+mysql> FLUSH PRIVILEGES;
+
+mysql> exit;
+
+sudo service mysql restart
+```
+
 
 <h1>Create a New User and grant all privileges to a database.</h1>
-
 
 **Access command line and enter MySQL server:**
 ```
