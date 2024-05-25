@@ -32,6 +32,28 @@ Confirm the mysql version is 8.0
 mysql --version
 ```
 
+As of July 2022, an error will occur when you run the mysql_secure_installation script without some further configuration. The reason is that this script will attempt to set a password for the installation’s root MySQL account but, by default on Ubuntu installations, this account is not configured to connect using a password.
+
+This will lead the script into a recursive loop which you can only get out of by closing your terminal window.
+
+Because the mysql_secure_installation script performs a number of other actions that are useful for keeping your MySQL installation secure, it’s still recommended that you run it before you begin using MySQL to manage your data. To avoid entering this recursive loop, though, you’ll need to first adjust how your root MySQL user authenticates.
+
+```
+sudo mysql
+```
+
+Then run the following ALTER USER command to change the root user’s authentication method to one that uses a password. The following example changes the authentication method to mysql_native_password:
+
+```
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'your_root_password';
+```
+
+After making this change, exit the MySQL prompt:
+```
+exit
+```
+
+Following that, you can run the mysql_secure_installation script without issue.
 
 Secure the MySQL Installation
  
@@ -72,6 +94,10 @@ mysql> quit;
 ```
 
 
+
+
+***(OPTIONAL)***
+***BEFORE JULY 2022, MySQL Setup***
 
 **One of the more common problems that users run into when trying to set up a remote MySQL database is that their MySQL instance is only configured to listen for local connections. This is MySQL’s default setting, but it won’t work for a remote database setup since MySQL must be able to listen for an external IP address where the server can be reached. To enable this, open up your mysqld.cnf file:**
 
